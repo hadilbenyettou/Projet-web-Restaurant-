@@ -1,9 +1,6 @@
-import NavBar from "./components/NavBar";
-
+import Main from "./components/Main";
 export default function App() {
   return (
-    <div className="bg-[url('/images/green2.jpg')] bg-cover bg-center min-h-screen">
-      <NavBar />
-    </div>
+      <Main/>
   );
 }
