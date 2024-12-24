@@ -1,3 +1,4 @@
+import AboutUs from './AboutUs';
 import Header from './Header';
 import NavBar from './NavBar';
 function Main() {
@@ -5,6 +6,7 @@ function Main() {
     <div>
       <NavBar />
       <Header/>
+      <AboutUs/>
     </div>
   );
 }
