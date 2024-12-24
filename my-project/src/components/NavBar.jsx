@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineRestaurantMenu } from 'react-icons/md';
-
+import { Link } from 'react-router-dom';
 function NavBar() {
   const [toggleMenu, setToggleMenu] = useState(false);
 
@@ -40,12 +40,11 @@ function NavBar() {
               onClick={() => setToggleMenu(false)}
             />
             <ul className="flex flex-col items-center space-y-8 text-golden text-2xl">
-              <li><a href="#home" onClick={() => setToggleMenu(false)}>Home</a></li>
-              <li><a href="#about" onClick={() => setToggleMenu(false)}>About</a></li>
-              <li><a href="#menu" onClick={() => setToggleMenu(false)}>Menu</a></li>
-              <li><a href="#awards" onClick={() => setToggleMenu(false)}>Awards</a></li>
-              <li><a href="#contact" onClick={() => setToggleMenu(false)}>Contact</a></li>
-            </ul>
+            <li><Link to="/" className="text-customBrown hover:text-customGreen">Home</Link></li>
+            <li><Link to="/about" className="text-customBrown hover:text-customGreen">About</Link></li>
+            <li><Link to="/menu" className="text-customBrown hover:text-customGreen">Menu</Link></li>
+            <li><Link to="/contact" className="text-customBrown hover:text-customGreen">Contact</Link></li>
+          </ul>
           </div>
         )}
       </div>

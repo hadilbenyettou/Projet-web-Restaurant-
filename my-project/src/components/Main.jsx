@@ -1,14 +1,20 @@
-import AboutUs from './AboutUs';
-import Header from './Header';
 import NavBar from './NavBar';
+import Header from './Header';
+import AboutUs from './AboutUs';
+
+
 function Main() {
   return (
     <div>
       <NavBar />
-      <Header/>
-      <AboutUs/>
+      <section id="home">
+        <Header />
+      </section>
+      <section id="about">
+        <AboutUs />
+      </section>
     </div>
   );
 }
 
-export default Main
+export default Main;
