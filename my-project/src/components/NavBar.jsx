@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineRestaurantMenu } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 function NavBar() {
   const [toggleMenu, setToggleMenu] = useState(false);
 
@@ -12,9 +11,9 @@ function NavBar() {
       </div>
       {/* Main Menu */}
       <ul className="hidden md:flex flex-1 justify-center items-center space-x-6 list-none text-white">
-        <li><a href="#home" className="text-customBrown hover:text-customGreen">Home</a></li>
+        <li><a href="#" className="text-customBrown hover:text-customGreen">Home</a></li>
         <li><a href="#about" className="text-customBrown hover:text-customGreen">About</a></li>
-        <li><a href="#menu" className="text-customBrown hover:text-customGreen">Menu</a></li>
+        <li><a href="#dishes" className="text-customBrown hover:text-customGreen">Specials</a></li>
         <li><a href="#contact" className="text-customBrown hover:text-customGreen">Contact</a></li>
       </ul>
 
@@ -40,10 +39,10 @@ function NavBar() {
               onClick={() => setToggleMenu(false)}
             />
             <ul className="flex flex-col items-center space-y-8 text-golden text-2xl">
-            <li><Link to="/" className="text-customBrown hover:text-customGreen">Home</Link></li>
-            <li><Link to="/about" className="text-customBrown hover:text-customGreen">About</Link></li>
-            <li><Link to="/menu" className="text-customBrown hover:text-customGreen">Menu</Link></li>
-            <li><Link to="/contact" className="text-customBrown hover:text-customGreen">Contact</Link></li>
+            <li><a to="#" className="text-customBrown hover:text-customGreen">Home</a></li>
+            <li><a to="#about" className="text-customBrown hover:text-customGreen">About</a></li>
+            <li><a to="#ishes" className="text-customBrown hover:text-customGreen">Specials</a></li>
+            <li><a to="#ontact" className="text-customBrown hover:text-customGreen">Contact</a></li>
           </ul>
           </div>
         )}

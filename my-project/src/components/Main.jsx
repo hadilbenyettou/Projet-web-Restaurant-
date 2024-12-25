@@ -14,10 +14,10 @@ function Main() {
       <section id="about">
         <AboutUs />
       </section>
-      <section id="Menu">
+      <section id="dishes">
         <TopDishes />
       </section>
-      <section id="ContactUs">
+      <section id="contact">
         <ContactUs/>
       </section>
     </div>
