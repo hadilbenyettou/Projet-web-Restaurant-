@@ -21,7 +21,7 @@ const TopDishes = () => {
   ];
 
   return (
-    <div className="p-10 bg-[#f8f4e3]"> {/* Light beige background */}
+    <div className="p-10 bg-[url('/images/poids.jpg')]"> {/* Light beige background */}
       <h2 className="text-center text-green-800 text-6xl font-bold mb-10">
         Top Dishes
       </h2>

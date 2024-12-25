@@ -2,6 +2,7 @@ import NavBar from './NavBar';
 import Header from './Header';
 import AboutUs from './AboutUs';
 import TopDishes from './TopDishes';
+import ContactUs from './ContactUs';
 
 function Main() {
   return (
@@ -13,8 +14,11 @@ function Main() {
       <section id="about">
         <AboutUs />
       </section>
-      <section id="about">
+      <section id="Menu">
         <TopDishes />
+      </section>
+      <section id="ContactUs">
+        <ContactUs/>
       </section>
     </div>
   );
