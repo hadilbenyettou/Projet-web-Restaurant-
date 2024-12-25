@@ -8,13 +8,13 @@ function Header() {
         </h1>
         <p className="text-gray-800 text-xl md:text-2xl mt-4 font-light">
           Experience the perfect blend of freshness, flavor, and elegance in every bite.
-        </p>
+        </p> 
       </div>
 
       {/* The image */}
       <div className="md:w-1/2">
         <img 
-          src="/images/pngwing.com.png" 
+          src="/images/couscous.png" 
           alt="Background" 
           className="w-full h-auto rounded-lg "
         />
