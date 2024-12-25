@@ -12,7 +12,7 @@ const ContactUs = () => {
           <h3 className="text-white text-3xl font-bold mb-4">Our Location</h3>
           <p className="text-white  text-xl mb-4">123 Algerian Street, Algiers</p>
           <p className="text-white  text-xl mb-4">+213 123 456 789</p>
-          <p className="text-white text-xl">info@algerianrestaurant.com</p>
+          <p className="text-white text-xl">info@AlgerianRest.com</p>
         </div>
       </div>
     </div>

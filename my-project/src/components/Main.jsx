@@ -1,5 +1,5 @@
 import NavBar from './NavBar';
-import Header from './Header';
+import Home from './Home';
 import AboutUs from './AboutUs';
 import TopDishes from './TopDishes';
 import ContactUs from './ContactUs';
@@ -9,7 +9,7 @@ function Main() {
     <div>
       <NavBar />
       <section id="home">
-        <Header />
+        <Home />
       </section>
       <section id="about">
         <AboutUs />
