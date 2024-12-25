@@ -39,10 +39,10 @@ function NavBar() {
               onClick={() => setToggleMenu(false)}
             />
             <ul className="flex flex-col items-center space-y-8 text-golden text-2xl">
-            <li><a to="#" className="text-customBrown hover:text-customGreen">Home</a></li>
-            <li><a to="#about" className="text-customBrown hover:text-customGreen">About</a></li>
-            <li><a to="#ishes" className="text-customBrown hover:text-customGreen">Specials</a></li>
-            <li><a to="#ontact" className="text-customBrown hover:text-customGreen">Contact</a></li>
+            <li><a href="#" className="text-customBrown hover:text-customGreen">Home</a></li>
+            <li><a href="#about" className="text-customBrown hover:text-customGreen">About</a></li>
+            <li><a href="#dishes" className="text-customBrown hover:text-customGreen">Specials</a></li>
+            <li><a href="#contact" className="text-customBrown hover:text-customGreen">Contact</a></li>
           </ul>
           </div>
         )}
