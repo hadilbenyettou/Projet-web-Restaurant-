@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineRestaurantMenu } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 function NavBar() {
   const [toggleMenu, setToggleMenu] = useState(false);
 
@@ -11,7 +12,7 @@ function NavBar() {
       </div>
       {/* Main Menu */}
       <ul className="hidden md:flex flex-1 justify-center items-center space-x-6 list-none text-white">
-        <li><a href="#" className="text-customBrown hover:text-customGreen">Home</a></li>
+        <li><a href="/" className="text-customBrown hover:text-customGreen">Home</a></li>
         <li><a href="#about" className="text-customBrown hover:text-customGreen">About</a></li>
         <li><a href="#dishes" className="text-customBrown hover:text-customGreen">Specials</a></li>
         <li><a href="#contact" className="text-customBrown hover:text-customGreen">Contact</a></li>
@@ -19,11 +20,10 @@ function NavBar() {
 
       {/* Right Side Links */}
       <div className="hidden md:flex justify-end items-center text-white space-x-4">
-        <a href="#login" className="text-customBrown hover:text-customGreen transition ease-in-out">Log In / Registration</a>
+        <Link to="/login" className="text-customBrown hover:text-customGreen transition ease-in-out">Log In / Sign Up</Link>
         <span className="border-l-2 border-customGreen-400 h-6"></span>
         <a href="/" className="text-customBrown hover:text-customGreen transition ease-in-out">Book Table</a>
       </div>
-
       {/* Hamburger Menu for Small Screens */}
       <div className="md:hidden flex items-center">
         <GiHamburgerMenu
@@ -39,11 +39,14 @@ function NavBar() {
               onClick={() => setToggleMenu(false)}
             />
             <ul className="flex flex-col items-center space-y-8 text-golden text-2xl">
-            <li><a href="#" className="text-customBrown hover:text-customGreen">Home</a></li>
-            <li><a href="#about" className="text-customBrown hover:text-customGreen">About</a></li>
-            <li><a href="#dishes" className="text-customBrown hover:text-customGreen">Specials</a></li>
-            <li><a href="#contact" className="text-customBrown hover:text-customGreen">Contact</a></li>
-          </ul>
+              <li><a href="/" className="text-customBrown hover:text-customGreen">Home</a></li>
+              <li><a href="#about" className="text-customBrown hover:text-customGreen">About</a></li>
+              <li><a href="#dishes" className="text-customBrown hover:text-customGreen">Specials</a></li>
+              <li><a href="#contact" className="text-customBrown hover:text-customGreen">Contact</a></li>
+              <li>
+                <Link to="/login" className="text-customBrown hover:text-customGreen">Log In</Link>
+              </li>
+            </ul>
           </div>
         )}
       </div>

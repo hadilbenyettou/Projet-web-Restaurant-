@@ -8,7 +8,7 @@ function Home() {
         </h1>
         <p className="text-gray-800 text-xl md:text-2xl mt-4 font-light">
           Experience the perfect blend of freshness, flavor, and elegance in every bite.
-        </p> 
+        </p>
       </div>
 
       {/* The image */}
