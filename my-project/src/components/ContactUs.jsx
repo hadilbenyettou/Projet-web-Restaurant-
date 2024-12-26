@@ -3,7 +3,7 @@ const ContactUs = () => {
   return (
     <div
       className="p-20 bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/blackbg.avif')" }} // Replace with your actual image path
+      style={{ backgroundImage: "url('/images/blackbg.avif')" }} 
     >
       <div className="max-w-4xl mx-auto text-center p-10 border-4 border-brown-700 rounded-lg">
         <h2 className="text-white text-6xl font-bold mb-10">Contact Us</h2>
