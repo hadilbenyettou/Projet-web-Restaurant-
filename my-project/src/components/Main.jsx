@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
 import NavBar from './NavBar';
 import Home from './Home';
 import AboutUs from './AboutUs';
@@ -6,17 +7,18 @@ import TopDishes from './TopDishes';
 import ContactUs from './ContactUs';
 import Login from './Login';
 import SignUp from './SignUp';
-import { Routes, Route } from 'react-router-dom';
-
+import { Routes, Route, Link } from 'react-router-dom';
+import AuthContext from '../context/AuthContext'; // Import AuthContext
+import ProtectedRoute from './ProtectedRoute';
+import Page from './Page'
 function Main() {
   const location = useLocation();
+  const { authState } = useContext(AuthContext); // Access authentication state from AuthContext
 
-  // Define routes where the NavBar should not appear
-  const hideNavBarRoutes = ['/login', '/signUp'];
+  const hideNavBarRoutes = ['/login', '/signUp','/page'];
 
   return (
     <div>
-      {/* Conditionally render NavBar */}
       {!hideNavBarRoutes.includes(location.pathname) && <NavBar />}
       
       <Routes>
@@ -40,7 +42,33 @@ function Main() {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
+        
+        {/* Protecting the dashboard route */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              {/* Only show this if the user is authenticated */}
+              <div>
+                Dashboard Content
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Show login or logout link based on authentication */}
+        {authState.isAuthenticated ? (
+          <Route path="/logout" element={<div>Logout Content</div>} />
+        ) : (
+          <Route
+            path="/login"
+            element={
+              <Link to="/login">Please Log In</Link>
+            }
+          />
+        )}
+        <Route path="/page" element={<Page />} /> {/* Your Page route */}
       </Routes>
     </div>
   );
