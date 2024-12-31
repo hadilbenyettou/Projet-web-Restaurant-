@@ -15,7 +15,7 @@ function Main() {
   const location = useLocation();
   const { authState } = useContext(AuthContext); // Access authentication state from AuthContext
 
-  const hideNavBarRoutes = ['/login', '/signUp','/page'];
+  const hideNavBarRoutes = ['/login', '/signup','/page'];
 
   return (
     <div>
