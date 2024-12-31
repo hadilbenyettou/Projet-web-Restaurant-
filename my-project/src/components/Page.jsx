@@ -42,7 +42,7 @@ const Page = () => {
               </button>
               {/* Cart Dropdown */}
               {cartItems.length > 0 && (
-                <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg p-4">
+                <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg p-4 z-50">
                   {cartItems.map((item) => (
                     <div key={item._id} className="flex justify-between items-center mb-2">
                       <span className="text-gray-800">{item.name}</span>
