@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Menu = () => {
+const Menu = ({ searchQuery = '', selectedCategory = 'All', addToCart }) => {
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +26,7 @@ const Menu = () => {
     fetchMenuItems();
   }, []);
 
-  // Group menu items by category
+  // Group and filter menu items
   const groupItemsByCategory = (items) => {
     return items.reduce((grouped, item) => {
       const { category } = item;
@@ -36,6 +37,15 @@ const Menu = () => {
       return grouped;
     }, {});
   };
+
+  // Filter items based on search query and selected category
+  const filteredItems = menuItems.filter((item) => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const groupedItems = groupItemsByCategory(filteredItems);
 
   // Render the menu items
   if (loading) {
@@ -53,8 +63,6 @@ const Menu = () => {
       </div>
     );
   }
-
-  const groupedItems = groupItemsByCategory(menuItems);
 
   return (
     <div className="container mx-auto p-6">
@@ -79,7 +87,10 @@ const Menu = () => {
                   <h4 className="text-2xl font-bold text-brown-800 mb-3">{item.name}</h4>
                   <p className="text-gray-600 text-sm mb-4">{item.description}</p>
                   <p className="text-xl font-bold text-green-600 mb-4">{item.price} DA</p>
-                  <button className="w-full py-3 px-6 bg-brown-600 text-white font-semibold rounded-lg hover:bg-brown-700 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 transition-all">
+                  <button
+                    onClick={() => addToCart(item)}
+                    className="w-full py-3 px-6 bg-brown-600 text-white font-semibold rounded-lg hover:bg-brown-700 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 transition-all"
+                  >
                     Add to Cart
                   </button>
                 </div>
@@ -90,6 +101,19 @@ const Menu = () => {
       ))}
     </div>
   );
+};
+
+// Add prop validation
+Menu.propTypes = {
+  searchQuery: PropTypes.string,
+  selectedCategory: PropTypes.string,
+  addToCart: PropTypes.func.isRequired,
+};
+
+// Default props
+Menu.defaultProps = {
+  searchQuery: '',
+  selectedCategory: 'All',
 };
 
 export default Menu;

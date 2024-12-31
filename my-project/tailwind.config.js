@@ -18,6 +18,7 @@ export default {
         gold: {
           500: '#FFD700', // Classic Gold
         },
+        beige: '#a48759',
       },
     },
   },
