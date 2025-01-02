@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useContext } from 'react'; // Add this import
+import AuthContext from '../context/AuthContext'; // Add this import
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa'; // Import icons
 import { motion } from 'framer-motion'; // Import animations
 
 function Login() {
+  const { login } = useContext(AuthContext); // Add this line
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State for showing password
@@ -25,9 +28,14 @@ function Login() {
       if (response.ok) {
         // Save JWT token in localStorage
         localStorage.setItem('token', data.token);
-
-        setMessage('Login successful! Redirecting...');
-        setTimeout(() => navigate('/page'), 2000); // Redirect to Page.jsx after 2 seconds
+        login({ email: data.email }, data.token, data.role); // Add this line
+        if (data.role === 'admin') {
+          setMessage('Login successful! Redirecting to Admin Page...');
+          setTimeout(() => navigate('/admin'), 2000); // Redirect to AdminPage.jsx
+        } else {
+          setMessage('Login successful! Redirecting...');
+          setTimeout(() => navigate('/page'), 2000); // Redirect to Page.jsx
+        }
       } else {
         setMessage(data.message || 'Login failed.');
       }
@@ -140,7 +148,7 @@ function Login() {
 
         {/* Sign-Up Link */}
         <p className="mt-8 text-sm text-brown-600 text-center">
-          Don't have an account?{' '}
+          Dont have an account?{' '}
           <Link
             to="/signup"
             className="text-brown-700 font-medium hover:underline hover:text-brown-800"

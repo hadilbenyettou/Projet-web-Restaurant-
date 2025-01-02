@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 // Sign-up Route
 router.post('/signup', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   try {
     // Validate input fields
@@ -24,6 +24,7 @@ router.post('/signup', async (req, res) => {
       name,
       email,
       password, // Password will be hashed automatically
+      role : role || 'customer',
     });
 
     await newUser.save();
@@ -60,11 +61,14 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate a JWT token if the password matches
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    console.log('Generated JWT token:', token);
+    const token = jwt.sign(
+      { id: user._id, role: user.role }, // Include the user's role
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
     // Send the token back to the client
-    res.status(200).json({ token });
+    res.status(200).json({ token, role: user.role });
 
   } catch (error) {
     console.error('Error during login process:', error.message);

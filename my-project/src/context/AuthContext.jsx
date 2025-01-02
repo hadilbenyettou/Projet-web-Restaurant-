@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({
     isAuthenticated: false,
     user: null,
+    role: null,
   });
 
   const navigate = useNavigate();
@@ -29,9 +30,14 @@ export const AuthProvider = ({ children }) => {
           'Authorization': `Bearer ${token}`,
         },
       });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+  
       const data = await response.json();
       if (data.success) {
-        setAuthState({ isAuthenticated: true, user: data.user });
+        setAuthState({ isAuthenticated: true, user: data.user, role: data.role });
       } else {
         setAuthState({ isAuthenticated: false, user: null });
       }
@@ -41,13 +47,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = (userData, token) => {
+  const login = (userData, token,role) => {
     localStorage.setItem('token', token); // Store token in localStorage
     setAuthState({
       isAuthenticated: true,
       user: userData,
+      role: role,
     });
-    navigate('/dashboard'); // Redirect to a protected route (e.g., dashboard)
+    console.log('AuthState after login:', { isAuthenticated: true, user: userData, role });
+    navigate(role === 'admin' ? '/admin' : '/page');  
   };
 
   const logout = () => {
