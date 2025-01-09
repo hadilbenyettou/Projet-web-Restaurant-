@@ -4,13 +4,15 @@ import axios from 'axios';
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [newUser, setNewUser] = useState({ name: '', email: '', password: '', role: 'customer' });
   const [selectedUser, setSelectedUser] = useState(null);
+  const [newMenuItem, setNewMenuItem] = useState({ name: '', price: '', description: '', category: '', imageUrl: '' });
 
-  // Fetch users and orders when the component mounts
+  // Fetch users, orders, and menu items when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,6 +29,12 @@ const AdminPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(ordersResponse.data);
+
+        // Fetch menu items
+        const menuItemsResponse = await axios.get('http://localhost:5000/api/menu-items', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setMenuItems(menuItemsResponse.data);
 
         setLoading(false);
       } catch (err) {
@@ -111,6 +119,48 @@ const AdminPage = () => {
     }
   };
 
+  // Handle menu item creation
+  const handleCreateMenuItem = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post('http://localhost:5000/api/menu-items', newMenuItem, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.status === 201) {
+        setMenuItems([...menuItems, response.data]);
+        setNewMenuItem({ name: '', price: '', description: '', category: '', imageUrl: '' });
+        setSuccessMessage('Menu item created successfully!');
+      } else {
+        setError('Error creating menu item.');
+      }
+    } catch (err) {
+      setError('Error creating menu item.');
+      console.error(err);
+    }
+  };
+
+  // Handle menu item deletion
+  const handleDeleteMenuItem = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.delete(`http://localhost:5000/api/menu-items/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.status === 200) {
+        setMenuItems(menuItems.filter((item) => item._id !== id)); // Remove menu item from state
+        setSuccessMessage('Menu item deleted successfully!');
+      } else {
+        setError('Failed to delete menu item. Please try again.');
+      }
+    } catch (err) {
+      setError('Error deleting menu item.');
+      console.error(err);
+    }
+  };
+
   // Mark an order as delivered
   const handleMarkDelivered = async (orderId) => {
     try {
@@ -146,7 +196,7 @@ const AdminPage = () => {
       const response = await axios.delete(`http://localhost:5000/api/orders/${orderId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       if (response.status === 200) {
         setOrders((prevOrders) => prevOrders.filter((order) => order._id !== orderId));
         setSuccessMessage('Order deleted successfully!');
@@ -280,7 +330,7 @@ const AdminPage = () => {
       </section>
 
       {/* Order Management Section */}
-      <section>
+      <section className="mb-10">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Order Management</h2>
         <div className="overflow-x-auto">
           <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
@@ -323,6 +373,93 @@ const AdminPage = () => {
                     )}
                     <button
                       onClick={() => handleDeleteOrder(order._id)}
+                      className="bg-red-500 text-white px-4 py-2"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Menu Item Management Section */}
+      <section>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Menu Item Management</h2>
+
+        {/* Create Menu Item Form */}
+        <form onSubmit={handleCreateMenuItem} className="mb-6">
+          <h3 className="text-xl font-semibold mb-4">Create New Menu Item</h3>
+          <input
+            type="text"
+            placeholder="Name"
+            value={newMenuItem.name}
+            onChange={(e) => setNewMenuItem({ ...newMenuItem, name: e.target.value })}
+            className="border p-2 mb-2 w-full"
+          />
+          <input
+            type="number"
+            placeholder="Price"
+            value={newMenuItem.price}
+            onChange={(e) => setNewMenuItem({ ...newMenuItem, price: e.target.value })}
+            className="border p-2 mb-2 w-full"
+          />
+          <input
+            type="text"
+            placeholder="Description"
+            value={newMenuItem.description}
+            onChange={(e) => setNewMenuItem({ ...newMenuItem, description: e.target.value })}
+            className="border p-2 mb-2 w-full"
+          />
+          <select
+            value={newMenuItem.category}
+            onChange={(e) => setNewMenuItem({ ...newMenuItem, category: e.target.value })}
+            className="border p-2 mb-2 w-full"
+          >
+            <option value="Meals">Meals</option>
+            <option value="Drinks">Drinks</option>
+            <option value="Desserts">Desserts</option>
+            <option value="Specials">Specials</option>
+            <option value="Sides">Sides</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={newMenuItem.imageUrl}
+            onChange={(e) => setNewMenuItem({ ...newMenuItem, imageUrl: e.target.value })}
+            className="border p-2 mb-2 w-full"
+          />
+          <button type="submit" className="bg-blue-600 text-white px-4 py-2">
+            Create Menu Item
+          </button>
+        </form>
+
+        {/* Menu Items Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="px-6 py-3 text-left">Name</th>
+                <th className="px-6 py-3 text-left">Price</th>
+                <th className="px-6 py-3 text-left">Description</th>
+                <th className="px-6 py-3 text-left">Category</th>
+                <th className="px-6 py-3 text-left">Image URL</th>
+                <th className="px-6 py-3 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {menuItems.map((item) => (
+                <tr key={item._id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4">{item.name}</td>
+                  <td className="px-6 py-4">${item.price}</td>
+                  <td className="px-6 py-4">{item.description}</td>
+                  <td className="px-6 py-4">{item.category}</td>
+                  <td className="px-6 py-4">{item.imageUrl}</td>
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => handleDeleteMenuItem(item._id)}
                       className="bg-red-500 text-white px-4 py-2"
                     >
                       Delete

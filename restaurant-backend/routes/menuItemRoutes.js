@@ -49,5 +49,18 @@ router.post('/menu-items', upload.single('image'), async (req, res) => {
     res.status(400).send('Error adding menu item');
   }
 });
+router.delete('/menu-items/:id', async (req, res) => {
+  try {
+    const menuItem = await MenuItem.findById(req.params.id);
+    if (!menuItem) {
+      return res.status(404).json({ message: 'Menu item not found' });
+    }
 
+    await menuItem.deleteOne();
+    res.status(200).json({ message: 'Menu item deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting menu item:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
 module.exports = router;
