@@ -67,7 +67,7 @@ const AdminPage = () => {
       setError('Error deleting user.');
       console.error(err); // Log the error for better debugging
     }
-  };
+  };  
 
   // Handle user editing (show form with selected user data)
   const handleEditUser = (user) => {
