@@ -213,79 +213,89 @@ const AdminPage = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Admin Dashboard</h1>
+    <div className="p-6 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Admin Dashboard</h1>
 
       {/* Success or Error Messages */}
-      {successMessage && <p className="text-green-500 text-center">{successMessage}</p>}
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
       {/* User Management Section */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Management</h2>
+      <section className="mb-10 bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">User Management</h2>
 
         {/* Create User Form */}
-        <form onSubmit={handleCreateUser} className="mb-6">
+        <form onSubmit={handleCreateUser} className="mb-8">
           <h3 className="text-xl font-semibold mb-4">Create New User</h3>
-          <input
-            type="text"
-            placeholder="Name"
-            value={newUser.name}
-            onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-            className="border p-2 mb-2 w-full"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={newUser.email}
-            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-            className="border p-2 mb-2 w-full"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={newUser.password}
-            onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-            className="border p-2 mb-2 w-full"
-          />
-          <select
-            value={newUser.role}
-            onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-            className="border p-2 mb-2 w-full"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              placeholder="Name"
+              value={newUser.name}
+              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={newUser.email}
+              onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={newUser.password}
+              onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <select
+              value={newUser.role}
+              onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="customer">Customer</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            <option value="customer">Customer</option>
-            <option value="admin">Admin</option>
-          </select>
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2">
             Create User
           </button>
         </form>
 
         {/* Update User Form */}
         {selectedUser && (
-          <form onSubmit={handleUpdateUser} className="mb-6">
+          <form onSubmit={handleUpdateUser} className="mb-8">
             <h3 className="text-xl font-semibold mb-4">Update User</h3>
-            <input
-              type="text"
-              value={selectedUser.name}
-              onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
-              className="border p-2 mb-2 w-full"
-            />
-            <input
-              type="email"
-              value={selectedUser.email}
-              onChange={(e) => setSelectedUser({ ...selectedUser, email: e.target.value })}
-              className="border p-2 mb-2 w-full"
-            />
-            <select
-              value={selectedUser.role}
-              onChange={(e) => setSelectedUser({ ...selectedUser, role: e.target.value })}
-              className="border p-2 mb-2 w-full"
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                value={selectedUser.name}
+                onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
+                className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="email"
+                value={selectedUser.email}
+                onChange={(e) => setSelectedUser({ ...selectedUser, email: e.target.value })}
+                className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <select
+                value={selectedUser.role}
+                onChange={(e) => setSelectedUser({ ...selectedUser, role: e.target.value })}
+                className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <button
+              type="submit"
+              className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
             >
-              <option value="customer">Customer</option>
-              <option value="admin">Admin</option>
-            </select>
-            <button type="submit" className="bg-green-600 text-white px-4 py-2">
               Update User
             </button>
           </form>
@@ -311,13 +321,13 @@ const AdminPage = () => {
                   <td className="px-6 py-4">
                     <button
                       onClick={() => handleEditUser(user)}
-                      className="bg-yellow-500 text-white px-4 py-2 mr-2"
+                      className="bg-yellow-500 text-white px-4 py-2 mr-2 rounded-lg hover:bg-yellow-600 transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteUser(user._id)}
-                      className="bg-red-500 text-white px-4 py-2"
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
                     >
                       Delete
                     </button>
@@ -330,8 +340,8 @@ const AdminPage = () => {
       </section>
 
       {/* Order Management Section */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Order Management</h2>
+      <section className="mb-10 bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Order Management</h2>
         <div className="overflow-x-auto">
           <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
             <thead className="bg-blue-600 text-white">
@@ -366,14 +376,14 @@ const AdminPage = () => {
                     {order.status !== 'Completed' && (
                       <button
                         onClick={() => handleMarkDelivered(order._id)}
-                        className="bg-green-500 text-white px-4 py-2 mr-2"
+                        className="bg-green-500 text-white px-4 py-2 mr-2 rounded-lg hover:bg-green-600 transition-colors"
                       >
                         Mark Delivered
                       </button>
                     )}
                     <button
                       onClick={() => handleDeleteOrder(order._id)}
-                      className="bg-red-500 text-white px-4 py-2"
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
                     >
                       Delete
                     </button>
@@ -386,52 +396,57 @@ const AdminPage = () => {
       </section>
 
       {/* Menu Item Management Section */}
-      <section>
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Menu Item Management</h2>
+      <section className="bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">Menu Item Management</h2>
 
         {/* Create Menu Item Form */}
-        <form onSubmit={handleCreateMenuItem} className="mb-6">
+        <form onSubmit={handleCreateMenuItem} className="mb-8">
           <h3 className="text-xl font-semibold mb-4">Create New Menu Item</h3>
-          <input
-            type="text"
-            placeholder="Name"
-            value={newMenuItem.name}
-            onChange={(e) => setNewMenuItem({ ...newMenuItem, name: e.target.value })}
-            className="border p-2 mb-2 w-full"
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            value={newMenuItem.price}
-            onChange={(e) => setNewMenuItem({ ...newMenuItem, price: e.target.value })}
-            className="border p-2 mb-2 w-full"
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            value={newMenuItem.description}
-            onChange={(e) => setNewMenuItem({ ...newMenuItem, description: e.target.value })}
-            className="border p-2 mb-2 w-full"
-          />
-          <select
-            value={newMenuItem.category}
-            onChange={(e) => setNewMenuItem({ ...newMenuItem, category: e.target.value })}
-            className="border p-2 mb-2 w-full"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              placeholder="Name"
+              value={newMenuItem.name}
+              onChange={(e) => setNewMenuItem({ ...newMenuItem, name: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              value={newMenuItem.price}
+              onChange={(e) => setNewMenuItem({ ...newMenuItem, price: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              value={newMenuItem.description}
+              onChange={(e) => setNewMenuItem({ ...newMenuItem, description: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <select
+              value={newMenuItem.category}
+              onChange={(e) => setNewMenuItem({ ...newMenuItem, category: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="Meals">Meals</option>
+              <option value="Drinks">Drinks</option>
+              <option value="Desserts">Desserts</option>
+              <option value="Specials">Specials</option>
+              <option value="Sides">Sides</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Image URL"
+              value={newMenuItem.imageUrl}
+              onChange={(e) => setNewMenuItem({ ...newMenuItem, imageUrl: e.target.value })}
+              className="border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            <option value="Meals">Meals</option>
-            <option value="Drinks">Drinks</option>
-            <option value="Desserts">Desserts</option>
-            <option value="Specials">Specials</option>
-            <option value="Sides">Sides</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Image URL"
-            value={newMenuItem.imageUrl}
-            onChange={(e) => setNewMenuItem({ ...newMenuItem, imageUrl: e.target.value })}
-            className="border p-2 mb-2 w-full"
-          />
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2">
             Create Menu Item
           </button>
         </form>
@@ -460,7 +475,7 @@ const AdminPage = () => {
                   <td className="px-6 py-4">
                     <button
                       onClick={() => handleDeleteMenuItem(item._id)}
-                      className="bg-red-500 text-white px-4 py-2"
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
                     >
                       Delete
                     </button>
