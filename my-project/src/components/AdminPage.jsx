@@ -40,7 +40,7 @@ const AdminPage = () => {
       if (response.status === 201) {
         setUsers([...users, response.data.user]);
         setNewUser({ name: '', email: '', password: '', role: 'customer' });
-        setError('User created successfully!');
+        setSuccessMessage('User created successfully!');
       } else {
         setError('Error creating user.');
       }
@@ -60,6 +60,7 @@ const AdminPage = () => {
   
       if (response.status === 200) {
         setUsers(users.filter(user => user._id !== id)); // Remove user from state
+        setSuccessMessage('User deleted successfully!');
       } else {
         setError('Failed to delete user. Please try again.');
       }
@@ -86,7 +87,7 @@ const AdminPage = () => {
       if (response.status === 200) {
         setUsers(users.map(user => user._id === selectedUser._id ? response.data.user : user));
         setSelectedUser(null); // Clear selected user
-        setError('User updated successfully!');
+        setSuccessMessage('User updated successfully!');
       } else {
         setError('Error updating user.');
       }
@@ -101,11 +102,18 @@ const AdminPage = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Admin Page</h1>
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Admin Dashboard</h1>
 
       {/* Success or Error Messages */}
       {successMessage && <p className="text-green-500 text-center">{successMessage}</p>}
       {error && <p className="text-red-500 text-center">{error}</p>}
+
+      {/* Admin Navigation */}
+      <div className="flex justify-center space-x-4 mb-6">
+        <button className="py-2 px-4 bg-blue-600 text-white rounded" onClick={() => setSelectedUser(null)}>User Management</button>
+        <button className="py-2 px-4 bg-gray-600 text-white rounded">Menu Item Management</button>
+        <button className="py-2 px-4 bg-gray-600 text-white rounded">Order Management</button>
+      </div>
 
       {/* Create User Form */}
       <form onSubmit={handleCreateUser} className="mb-6">
@@ -171,39 +179,41 @@ const AdminPage = () => {
       )}
 
       {/* Users Table */}
-      <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
-        <thead className="bg-blue-600 text-white">
-          <tr>
-            <th className="px-6 py-3 text-left">Name</th>
-            <th className="px-6 py-3 text-left">Email</th>
-            <th className="px-6 py-3 text-left">Role</th>
-            <th className="px-6 py-3 text-left">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(user => (
-            <tr key={user._id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-              <td className="px-6 py-4">{user.name}</td>
-              <td className="px-6 py-4">{user.email}</td>
-              <td className="px-6 py-4">{user.role}</td>
-              <td className="px-6 py-4">
-                <button
-                  onClick={() => handleEditUser(user)}
-                  className="bg-yellow-500 text-white px-4 py-2 mr-2"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteUser(user._id)}
-                  className="bg-red-500 text-white px-4 py-2"
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-blue-600 text-white">
+            <tr>
+              <th className="px-6 py-3 text-left">Name</th>
+              <th className="px-6 py-3 text-left">Email</th>
+              <th className="px-6 py-3 text-left">Role</th>
+              <th className="px-6 py-3 text-left">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user._id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <td className="px-6 py-4">{user.name}</td>
+                <td className="px-6 py-4">{user.email}</td>
+                <td className="px-6 py-4">{user.role}</td>
+                <td className="px-6 py-4">
+                  <button
+                    onClick={() => handleEditUser(user)}
+                    className="bg-yellow-500 text-white px-4 py-2 mr-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteUser(user._id)}
+                    className="bg-red-500 text-white px-4 py-2"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
