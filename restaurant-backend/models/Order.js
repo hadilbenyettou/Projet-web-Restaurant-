@@ -29,6 +29,14 @@ const OrderSchema = new mongoose.Schema({
     enum: ['Pending', 'Completed', 'Cancelled'],
     default: 'Pending',
   },
+  address: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

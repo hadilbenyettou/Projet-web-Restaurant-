@@ -7,6 +7,8 @@ const Page = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [cartItems, setCartItems] = useState([]);
+  const [address, setAddress] = useState(''); // Address input state
+  const [phone, setPhone] = useState(''); // Phone input state
 
   // Add item to cart
   const addToCart = (item) => {
@@ -53,11 +55,18 @@ const Page = () => {
       menuItemId: item._id,
       quantity: item.quantity,
     }));
-  
+
     const orderData = {
       items: orderItems,
+      address, // Include address
+      phone,   // Include phone
     };
-  
+
+    if (!address || !phone) {
+      alert('Please enter your address and phone number!');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:5000/api/orders/place-order', {
         method: 'POST',
@@ -67,11 +76,13 @@ const Page = () => {
         },
         body: JSON.stringify(orderData),
       });
-  
+
       const result = await response.json();
       if (response.ok) {
         alert('Order placed successfully!');
         setCartItems([]); // Clear the cart
+        setAddress(''); // Clear the address input
+        setPhone(''); // Clear the phone input
       } else {
         alert(result.message || 'Error placing order');
       }
@@ -144,6 +155,22 @@ const Page = () => {
                 </button>
               </div>
             ))}
+          </div>
+          <div className="mt-4">
+            <input
+              type="text"
+              placeholder="Enter your address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="px-4 py-2 w-full mb-2 border rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Enter your phone number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="px-4 py-2 w-full mb-4 border rounded-lg"
+            />
           </div>
           <div className="mt-6 pt-4 border-t border-gray-200">
             <div className="flex justify-between text-lg font-semibold">
