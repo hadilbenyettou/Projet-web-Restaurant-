@@ -3,18 +3,14 @@ const router = express.Router();
 const Order = require('../models/Order');
 const User = require('../models/users');
 const MenuItem = require('../models/MenuItem');
+const authMiddleware = require('../middleware/authMiddleware');
 
 // Place a new order
-router.post('/place-order', async (req, res) => {
-  const { userId, items } = req.body; // Assuming userId and items are sent from the frontend
+router.post('/place-order', authMiddleware, async (req, res) => {
+  const { items } = req.body; // Items sent from the frontend
+  const userId = req.user.id; // Extracted from the middleware
 
   try {
-    // Validate that the user exists
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(400).json({ message: 'User not found' });
-    }
-
     // Calculate the total price of the order
     let totalPrice = 0;
     for (let item of items) {
@@ -38,6 +34,7 @@ router.post('/place-order', async (req, res) => {
     await order.save();
     res.status(201).json({ message: 'Order placed successfully', order });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });

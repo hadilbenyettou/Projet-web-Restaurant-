@@ -48,26 +48,26 @@ const Page = () => {
 
   // Place order
   const placeOrder = async () => {
-    const userId = 'USER_ID'; // Replace with actual logged-in user ID
+    const token = localStorage.getItem('token'); // Retrieve the token from storage
     const orderItems = cartItems.map((item) => ({
       menuItemId: item._id,
-      quantity: item.quantity, // Use the item's quantity
+      quantity: item.quantity,
     }));
-
+  
     const orderData = {
-      userId,
       items: orderItems,
     };
-
+  
     try {
       const response = await fetch('http://localhost:5000/api/orders/place-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Include the token in the header
         },
         body: JSON.stringify(orderData),
       });
-
+  
       const result = await response.json();
       if (response.ok) {
         alert('Order placed successfully!');
