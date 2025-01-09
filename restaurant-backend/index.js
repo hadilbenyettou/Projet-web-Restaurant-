@@ -5,7 +5,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middleware/authMiddleware');
 const menuItemRoutes = require('./routes/menuItemRoutes'); 
-
+const orderRoutes = require('./routes/order');  
 const app = express();
 
 // Use CORS middleware to allow cross-origin requests
@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
 // Authentication routes
 app.use('/api/auth', authRoutes);
 app.use('/api', menuItemRoutes);
+app.use('/api/orders', orderRoutes);
 // Protected route example
 app.get('/api/protected', authMiddleware, (req, res) => {
   res.send('This is a protected route');
